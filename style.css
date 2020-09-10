@@ -1,0 +1,66 @@
+body {
+    background-color: #222;
+    color: whitesmoke;
+}
+
+#targetKanaDisplay {
+    position: relative;
+    font-size: 100px;
+    font-weight: bolder;
+    text-align: center;
+    justify-content: center;
+    text-shadow: #555 5px 5px;
+
+}
+
+#buttons {
+    margin: auto;
+    width: 500px;
+    display: flex;
+    flex-direction:row;
+    justify-content:center;
+}
+.container {
+    position: relative;
+    padding: 5px;
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom button */
+  .button {
+    height: 40px;
+    width: 25px;
+    border: 3px solid whitesmoke;
+    font-size: 30pt;
+    justify-content: center;
+    cursor: pointer;
+    text-shadow: #555 2px 2px;
+    box-shadow: #555 4px 4px;
+  }
+  
+  /* When container is hovered, change button's styling */
+  .container:hover .button {
+    background-color: #666;
+  }
+  
+  /* When checkbox is checked, change button's styling */
+  .container input:checked + .button {
+    position: relative;
+    top: -10px;
+    color: #90ee90
+  }
+  
