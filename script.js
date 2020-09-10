@@ -2,6 +2,7 @@ const green = 'LightGreen';
 const red = 'LightCoral';
 const white = 'WhiteSmoke';
 
+
 // Emulates the Japanese IME I use
 const conversionTable = { 
 	'`':'ろ', 1:'ぬ', 2:'ふ', 3:'あ', 4:'う', 5:'え', 6:'お', 7:'や', 8:'ゆ', 9:'よ', 0:'わ', ')':'を', '-':'ほ', '_':'ー', '=':'へ',
@@ -55,14 +56,22 @@ function KanaColumn(inputKana, checkboxID) {
 
 function pass() {
 	targetKanaDisplay.style.color = green;
-	setTimeout(() => {targetKanaDisplay.style.color = white; }, 2000);
+	flashColor(targetKanaDisplay, green);
 	targetKanaDisplay.textContent = randomKana();
 }
 
 function fail() {
-	targetKanaDisplay.style.color = red;
+	flashColor(targetKanaDisplay, red);
 }
 
 function randomKana() {
 	return possibleKana[Math.floor(Math.random() * possibleKana.length)];
+}
+
+
+let timeoutHandle;
+function flashColor(element, color) {
+	element.style.color = color;
+	clearTimeout(timeoutHandle);
+	timeoutHandle = setTimeout(() => {element.style.color = white; }, 500);
 }
