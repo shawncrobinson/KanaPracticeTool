@@ -1,5 +1,6 @@
 const green = 'LightGreen';
 const red = 'LightCoral';
+const white = 'WhiteSmoke';
 
 // Emulates the Japanese IME I use
 const conversionTable = { 
@@ -54,9 +55,8 @@ function KanaColumn(inputKana, checkboxID) {
 
 function pass() {
 	targetKanaDisplay.style.color = green;
-	//animations? wait?
+	setTimeout(() => {targetKanaDisplay.style.color = white; }, 2000);
 	targetKanaDisplay.textContent = randomKana();
-	//targetKanaDisplay.style.color = 'Black';
 }
 
 function fail() {
