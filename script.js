@@ -3,7 +3,7 @@ const red = 'LightCoral';
 
 // Emulates the Japanese IME I use
 const conversionTable = { 
-	'`':'ろ', 1:'ぬ', 2:'ふ', 3:'あ', 4:'う', 5:'え', 6:'お', 7:'や', 8:'ゆ',9:'よ', 0:'わ', ')':'を', '-':'ほ', '_':'ー', '=':'へ',
+	'`':'ろ', 1:'ぬ', 2:'ふ', 3:'あ', 4:'う', 5:'え', 6:'お', 7:'や', 8:'ゆ', 9:'よ', 0:'わ', ')':'を', '-':'ほ', '_':'ー', '=':'へ',
 	q:'た', w:'て', e:'い', r:'す', t:'か', y:'ん', u:'な', i:'に', o:'ら', p:'せ', '[':'゛', ']':'゜', '\\':'む',
 	a:'ち', s:'と', d:'し', f:'は', g:'き', h:'く', j:'ま', k:'の', l:'り', ';':'れ', '\'':'け',
 	z:'つ', x:'さ', c:'そ', v:'ひ', b:'こ', n:'み', m:'も', ',':'ね', '.':'る', '/':'め' };
@@ -23,7 +23,8 @@ let yaColumnKana = new KanaColumn(['や', 'ゆ', 'よ'], "yaButton")
 let raColumnKana = new KanaColumn(['ら', 'り', 'る', 'れ', 'ろ'], "raButton")
 let waColumnKana = new KanaColumn(['わ', 'を', 'ん'], "waButton")
 
-aColumnKana.checkbox.dispatchEvent(new Event('change')); // Initialize checked
+aColumnKana.checkbox.checked = true; // Initialize as checked
+aColumnKana.checkbox.dispatchEvent(new Event('change')); // Then trigger event function
 
 document.addEventListener('keydown', (event) => {
 	let convertedKey = conversionTable[event.key];
