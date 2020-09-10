@@ -23,18 +23,16 @@ let yaColumnKana = new KanaColumn(['や', 'ゆ', 'よ'], "yaButton")
 let raColumnKana = new KanaColumn(['ら', 'り', 'る', 'れ', 'ろ'], "raButton")
 let waColumnKana = new KanaColumn(['わ', 'を', 'ん'], "waButton")
 
-aColumnKana.checkbox.checked = true;
-possibleKana = aColumnKana.kana;
+aColumnKana.checkbox.dispatchEvent(new Event('change')); // Initialize checked
 
 document.addEventListener('keydown', (event) => {
 	let convertedKey = conversionTable[event.key];
 	
 	if(convertedKey == targetKanaDisplay.textContent)
 		pass();
-	else if (event.key == 'Shift')
-		;// nothing(); because shift is required for some kana
-	else
+	else if (event.key != 'Shift')
 		fail();
+	// If shift was pressed, do nothing.
 })
 
 function KanaColumn(inputKana, checkboxID) {
@@ -54,7 +52,6 @@ function KanaColumn(inputKana, checkboxID) {
 }
 
 function pass() {
-	console.log('pass');
 	targetKanaDisplay.style.color = green;
 	//animations? wait?
 	targetKanaDisplay.textContent = randomKana();
@@ -62,7 +59,6 @@ function pass() {
 }
 
 function fail() {
-	console.log('fail');
 	targetKanaDisplay.style.color = red;
 }
 
