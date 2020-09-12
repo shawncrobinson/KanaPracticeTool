@@ -10,7 +10,7 @@
 
 <body>
     <h1 id = "targetKanaDisplay">あ</h1> 
-    
+
     <div id="buttons">
         <label class="container">
             <input type="checkbox" id="aButton">
@@ -53,6 +53,12 @@
             <span class="button">わ</span>
         </label>
     </div>
+
+    <div id="volume">
+        <img src="images/speaker.png" width="16" height="16"> <!-- I know this resizing is bad and I really should use an .svg or something but the goal of this is to dip my toes into HTML/CSS/JS, not Gimp.-->
+        <input id="volumeSlider" type="range" min="0" max="100" value="50">
+    </div>
     <script src="script.js"></script>
 </body>
+
 </html>

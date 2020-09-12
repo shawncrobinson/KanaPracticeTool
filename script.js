@@ -2,17 +2,22 @@ const green = 'LightGreen';
 const red = 'LightCoral';
 const white = 'WhiteSmoke';
 
-
 // Emulates the Japanese IME I use
 const conversionTable = { 
 	'`':'ろ', 1:'ぬ', 2:'ふ', 3:'あ', 4:'う', 5:'え', 6:'お', 7:'や', 8:'ゆ', 9:'よ', 0:'わ', ')':'を', '-':'ほ', '_':'ー', '=':'へ',
 	q:'た', w:'て', e:'い', r:'す', t:'か', y:'ん', u:'な', i:'に', o:'ら', p:'せ', '[':'゛', ']':'゜', '\\':'む',
 	a:'ち', s:'と', d:'し', f:'は', g:'き', h:'く', j:'ま', k:'の', l:'り', ';':'れ', '\'':'け',
-	z:'つ', x:'さ', c:'そ', v:'ひ', b:'こ', n:'み', m:'も', ',':'ね', '.':'る', '/':'め' };
-
-let possibleKana = [];
+	z:'つ', x:'さ', c:'そ', v:'ひ', b:'こ', n:'み', m:'も', ',':'ね', '.':'る', '/':'め'
+};
 
 let targetKanaDisplay = document.getElementById('targetKanaDisplay');
+let volumeSlider = document.getElementById('volumeSlider');
+
+let passAudio = new Audio('audio/pass.ogg');
+let failAudio = new Audio('audio/fail.ogg');
+volumeSlider.dispatchEvent(new Event('change'));
+
+let possibleKana = [];
 
 let  aColumnKana = new KanaColumn(['あ', 'い', 'う', 'え', 'お'], "aButton")
 let kaColumnKana = new KanaColumn(['か', 'き', 'く', 'け', 'こ'], "kaButton")
@@ -28,7 +33,8 @@ let waColumnKana = new KanaColumn(['わ', 'を', 'ん'], "waButton")
 aColumnKana.checkbox.checked = true; // Initialize as checked
 aColumnKana.checkbox.dispatchEvent(new Event('change')); // Then trigger event function
 
-document.addEventListener('keydown', (event) => {
+
+document.addEventListener('keydown', (event) => { // Main logic
 	let convertedKey = conversionTable[event.key];
 	
 	if(convertedKey == targetKanaDisplay.textContent)
@@ -36,6 +42,11 @@ document.addEventListener('keydown', (event) => {
 	else if (event.key != 'Shift')
 		fail();
 	// If shift was pressed, do nothing.
+})
+
+volumeSlider.addEventListener('change', () => {
+	passAudio.volume = volumeSlider.value/100;
+	failAudio.volume = volumeSlider.value/200; // 'Cause I think the sound is a little harsh and I don't want to mess with audacity
 })
 
 function KanaColumn(inputKana, checkboxID) {
@@ -57,21 +68,22 @@ function KanaColumn(inputKana, checkboxID) {
 function pass() {
 	targetKanaDisplay.style.color = green;
 	flashColor(targetKanaDisplay, green);
+	passAudio.play();
 	targetKanaDisplay.textContent = randomKana();
 }
 
 function fail() {
 	flashColor(targetKanaDisplay, red);
+	failAudio.play();
 }
 
 function randomKana() {
 	return possibleKana[Math.floor(Math.random() * possibleKana.length)];
 }
 
-
-let timeoutHandle;
+let flashTimeoutHandle; // To make sure element is color for duration even if called rapidly
 function flashColor(element, color) {
 	element.style.color = color;
-	clearTimeout(timeoutHandle);
-	timeoutHandle = setTimeout(() => {element.style.color = white; }, 500);
+	clearTimeout(flashTimeoutHandle);
+	flashTimeoutHandle = setTimeout(() => {element.style.color = white; }, 500);
 }
